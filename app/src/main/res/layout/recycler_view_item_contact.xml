@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#013159"
+
+        app:cardElevation="3dp"
+        app:cardCornerRadius="10dp"
+        app:cardForegroundColor="@color/cardview_shadow_end_color">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/list_item_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Vadim Lazarevich"
+                    android:textColor="#ABBDFF"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:id="@+id/list_item_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_margin="10dp"
+                    android:text="0547662475"
+                    android:textColor="#ABBDFF"
+                    android:textSize="22sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/list_BTN_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#013159"
+                    android:src="@drawable/ic_edit">
+
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/list_BTN_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:backgroundTint="#013159"
+                    android:src="@drawable/ic_delete">
+
+                </ImageButton>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>
