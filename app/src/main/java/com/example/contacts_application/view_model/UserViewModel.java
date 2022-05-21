@@ -7,11 +7,11 @@ import androidx.lifecycle.AndroidViewModel;
 
 
 import com.example.contacts_application.UserCallback;
-import com.example.contacts_application.UserRepository;
+import com.example.contacts_application.repositories.UserRepository;
 import com.example.contacts_application.entities.User;
 
 public class UserViewModel extends AndroidViewModel {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
 
     public UserViewModel(@NonNull Application application) {

@@ -1,11 +1,11 @@
-package com.example.contacts_application;
+package com.example.contacts_application.repositories;
 
 import android.app.Application;
-import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.example.contacts_application.api.Gender;
+import com.example.contacts_application.entities.Gender;
 import com.example.contacts_application.api.RetrofitService;
 import com.example.contacts_application.data.AppDatabase;
 import com.example.contacts_application.data.ContactDao;
@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class ContactRepository {
 
-    private ContactDao contactDao;
+    private final ContactDao contactDao;
     private LiveData<List<Contact>> allContacts;
 
 
@@ -55,10 +55,16 @@ public class ContactRepository {
         AppDatabase.databaseWriteExecutor.execute(() -> contactDao.update(contact));
     }
 
-    public void setGenderForContact(Contact contact){
-        RetrofitService.getInterface().getGender(contact.getName()).enqueue(new Callback<Gender>() {
+    /**
+     * set the gender of the contact using API when response arrives update the contact in the database.
+     *
+     * @param contact the contact to set the gender for.
+     */
+    public void setGenderForContact(Contact contact) {
+
+        RetrofitService.getInterface().getGender(getContactFirstName(contact)).enqueue(new Callback<Gender>() {
             @Override
-            public void onResponse(Call<Gender> call, Response<Gender> response) {
+            public void onResponse(@NonNull Call<Gender> call, @NonNull Response<Gender> response) {
                 if (response.body() != null) {
                     contact.setGender(response.body().getGender());
                     update(contact);
@@ -66,10 +72,16 @@ public class ContactRepository {
             }
 
             @Override
-            public void onFailure(Call<Gender> call, Throwable t) {
+            public void onFailure(@NonNull Call<Gender> call, @NonNull Throwable t) {
                 // Nothing to do..
             }
         });
+    }
+
+    private String getContactFirstName(Contact contact) {
+        if (contact.getName().contains(" "))
+            return contact.getName().substring(0, contact.getName().indexOf(" "));
+        return contact.getName();
     }
 
 }

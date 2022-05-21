@@ -4,16 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F4F3EE"
     tools:context=".ui.Activity_SignUp">
 
+
+    <TextView
+        style="@style/generalTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/signUp_EDT_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
     <EditText
         android:id="@+id/signUp_EDT_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Enter Email"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress"
+        style="@style/editTextStyle"
+        android:hint="@string/enter_email_login"
         app:layout_constraintBottom_toTopOf="@+id/signUp_EDT_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -27,12 +43,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Enter Password"
+        android:hint="@string/enter_password"
+        android:autofillHints="password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+        style="@style/editTextStyle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.387" />
 
@@ -41,7 +59,8 @@
         android:id="@+id/signUp_BTN_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
+        android:text="@string/sign_up"
+        style="@style/buttonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

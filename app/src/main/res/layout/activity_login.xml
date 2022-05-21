@@ -4,16 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F4F3EE"
     tools:context=".ui.Activity_Login">
+
+    <TextView
+        style="@style/generalTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/login_EDT_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
 
     <EditText
         android:id="@+id/login_EDT_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
+        android:backgroundTint="#463F3A"
+        android:autofillHints="emailAddress"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Enter Email"
+        android:hint="@string/enter_email_login"
+        android:inputType="textEmailAddress"
+        android:textColor="#463F3A"
+        android:textColorHint="#463F3A"
         app:layout_constraintBottom_toTopOf="@+id/login_EDT_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -26,9 +45,13 @@
         android:id="@+id/login_EDT_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#463F3A"
         android:ems="10"
-        android:hint="Enter Password"
+        android:hint="@string/enter_password"
+        android:autofillHints="password"
         android:inputType="textPassword"
+        android:textColor="#463F3A"
+        android:textColorHint="#463F3A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -40,7 +63,8 @@
         android:id="@+id/login_BTN_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login"
+        style="@style/buttonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -50,11 +74,26 @@
 
     </com.google.android.material.button.MaterialButton>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/or"
+        android:textColor="#463F3A"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.626">
+
+    </TextView>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_BTN_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
+        android:text="@string/sign_up"
+        style="@style/buttonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"

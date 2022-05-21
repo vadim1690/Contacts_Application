@@ -1,20 +1,19 @@
 package com.example.contacts_application.view_model;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.contacts_application.ContactRepository;
+import com.example.contacts_application.repositories.ContactRepository;
 import com.example.contacts_application.entities.Contact;
 import com.example.contacts_application.entities.User;
 
 import java.util.List;
 
 public class ContactViewModel extends AndroidViewModel {
-    private ContactRepository contactRepository;
+    private final ContactRepository contactRepository;
     private LiveData<List<Contact>> allContacts;
     private User user;
 
@@ -24,6 +23,10 @@ public class ContactViewModel extends AndroidViewModel {
 
     }
 
+    /**
+     * set the user that currently logged in to show his contacts only
+     * @param user the user currently logged in.
+     */
     public void setUserForContacts(User user) {
         this.user = user;
         contactRepository.setUserForContacts(user);

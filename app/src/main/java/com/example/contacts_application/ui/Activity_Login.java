@@ -3,19 +3,19 @@ package com.example.contacts_application.ui;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.contacts_application.R;
-import com.example.contacts_application.UserCallback;
-import com.example.contacts_application.entities.Contact;
+
+
 import com.example.contacts_application.entities.User;
 import com.example.contacts_application.view_model.UserViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -30,6 +30,7 @@ public class Activity_Login extends AppCompatActivity {
     private UserViewModel userViewModel;
 
     private ActivityResultLauncher<Intent> signUpActivityResultLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +39,12 @@ public class Activity_Login extends AppCompatActivity {
         setClickListeners();
         setActivityResultLaunchers();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        //userViewModel.deleteAll();
+
     }
 
+    /**
+     *  set the sign up activity result to create a new user if the result is OK.
+     */
     private void setActivityResultLaunchers() {
         signUpActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -53,10 +57,8 @@ public class Activity_Login extends AppCompatActivity {
                             addNewUser(user);
                         }
                     } else {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "User did not saved!",
-                                Toast.LENGTH_LONG).show();
+                        showToastMessage("User did not saved!");
+
                     }
                 });
     }
@@ -64,6 +66,7 @@ public class Activity_Login extends AppCompatActivity {
     private void setClickListeners() {
         login_BTN_login.setOnClickListener(view -> startMainActivity());
         login_BTN_signup.setOnClickListener(view -> startSignUpActivity());
+
     }
 
     private void startSignUpActivity() {
@@ -71,32 +74,48 @@ public class Activity_Login extends AppCompatActivity {
         signUpActivityResultLauncher.launch(intent);
     }
 
-    private void addNewUser(User user) {
-        userViewModel.insert(user);
+    /**
+     *  add new user to database if the user is not already exists.
+     * @param newUser the new user to add.
+     */
+    private void addNewUser(User newUser) {
+        userViewModel.find(newUser.getEmail(), newUser.getPassword(), user -> {
+            if (user != null) {
+                showToastMessage("User already exists!");
+
+            } else {
+                showToastMessage("User created successfully");
+                userViewModel.insert(newUser);
+            }
+        });
+
     }
 
+    /**
+     *  start the main activity if login details are correct.
+     */
     private void startMainActivity() {
 
-        userViewModel.find(login_EDT_email.getText().toString(), login_EDT_password.getText().toString(), new UserCallback() {
-            @Override
-            public void userFound(User user) {
-                if(user==null){
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "User does not exist!!!",
-                            Toast.LENGTH_LONG).show();
-                }else{
-
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra(EXTRA_USER_KEY , new Gson().toJson(user));
-                    startActivity(intent);
-                    finish();
-                }
+        userViewModel.find(login_EDT_email.getText().toString(), login_EDT_password.getText().toString(), user -> {
+            if (user == null) {
+                showToastMessage("User does not exist!");
+            } else {
+                showToastMessage("Login successfully");
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra(EXTRA_USER_KEY, new Gson().toJson(user));
+                startActivity(intent);
+                finish();
             }
         });
 
 
+    }
 
+    private void showToastMessage(String message) {
+        Toast.makeText(
+                getApplicationContext(),
+                message,
+                Toast.LENGTH_LONG).show();
     }
 
     private void findViews() {

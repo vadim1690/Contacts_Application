@@ -1,4 +1,4 @@
-package com.example.contacts_application.api;
+package com.example.contacts_application.entities;
 
 public class Gender {
     private String name;

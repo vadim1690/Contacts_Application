@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F4F3EE"
+    android:orientation="vertical">
+
     <ImageButton
+        android:id="@+id/contact_BTN_exit"
+        style="@style/buttonStyle"
         android:layout_width="44dp"
         android:layout_height="46dp"
-        android:id="@+id/contact_BTN_exit"
         android:src="@drawable/ic_exit"
+        android:contentDescription="@string/exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.013"
@@ -21,10 +24,12 @@
 
     <EditText
         android:id="@+id/contact_EDT_name"
+        style="@style/editTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_padding"
-        android:hint="Contact full name"
+        android:autofillHints="name"
+        android:hint="@string/contact_full_name"
         android:inputType="textPersonName"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,10 +40,12 @@
 
     <EditText
         android:id="@+id/contact_EDT_phoneNumber"
+        style="@style/editTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_padding"
-        android:hint="Contact phone number"
+        android:hint="@string/contact_phone_number"
+        android:autofillHints="phone"
         android:inputType="phone"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,10 +56,12 @@
 
     <EditText
         android:id="@+id/contact_EDT_email"
+        style="@style/editTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_padding"
-        android:hint="Contact Email"
+        android:hint="@string/contact_email"
+        android:autofillHints="emailAddress"
         android:inputType="textWebEmailAddress"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,10 +72,12 @@
 
     <EditText
         android:id="@+id/contact_EDT_address"
+        style="@style/editTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_padding"
-        android:hint="Contact Address"
+        android:hint="@string/contact_address"
+        android:autofillHints="postalAddress"
         android:inputType="textPostalAddress"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,10 +87,11 @@
 
     <EditText
         android:id="@+id/contact_EDT_birthday"
+        style="@style/editTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_padding"
-        android:hint="Contact Birthday"
+        android:hint="@string/contact_birthday"
         android:inputType="date"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,9 +102,9 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/contact_BTN_add"
+        style="@style/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#000F5C"
         android:text="@string/add_contact"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

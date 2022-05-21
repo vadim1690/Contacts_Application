@@ -34,21 +34,22 @@ public class Activity_Edit_Contact extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_contact);
+        setContact();
+        findViews();
+        setContactValuesInView();
+        setOnClickListeners();
 
+    }
+
+    private void setContact() {
         Bundle bundle = getIntent().getExtras();
         String json = bundle.getString(MainActivity.EXTRA_CONTACT_KEY);
         if (json != null) {
             contact = new Gson().fromJson(json, Contact.class);
         }
-
-
-        findViews();
-        setContactValues();
-        setOnClickListeners();
-
     }
 
-    private void setContactValues() {
+    private void setContactValuesInView() {
         editContact_LBL_title.setText("Editing " + contact.getName());
         editContact_EDT_name.setText(contact.getName());
         editContact_EDT_phoneNumber.setText(contact.getPhone());
@@ -79,29 +80,31 @@ public class Activity_Edit_Contact extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-
-                if (!TextUtils.isEmpty(editContact_EDT_name.getText()))
-                    contact.setName(editContact_EDT_name.getText().toString());
-
-                if (!TextUtils.isEmpty(editContact_EDT_phoneNumber.getText()))
-                    contact.setPhone(editContact_EDT_phoneNumber.getText().toString());
-
-                if (!TextUtils.isEmpty(editContact_EDT_birthday.getText()))
-                    contact.setBirthday(editContact_EDT_birthday.getText().toString());
-
-                if (!TextUtils.isEmpty(editContact_EDT_address.getText()))
-                    contact.setAddress(editContact_EDT_address.getText().toString());
-
-                if (!TextUtils.isEmpty(editContact_EDT_gender.getText()))
-                    contact.setGender(editContact_EDT_gender.getText().toString());
-
-                if (!TextUtils.isEmpty(editContact_EDT_email.getText()))
-                    contact.setEmail(editContact_EDT_email.getText().toString());
-
+                updateContact();
                 replyIntent.putExtra(MainActivity.EXTRA_CONTACT_KEY, new Gson().toJson(contact));
                 setResult(RESULT_OK, replyIntent);
                 finish();
             }
         });
+    }
+
+    private void updateContact() {
+        if (!TextUtils.isEmpty(editContact_EDT_name.getText()))
+            contact.setName(editContact_EDT_name.getText().toString());
+
+        if (!TextUtils.isEmpty(editContact_EDT_phoneNumber.getText()))
+            contact.setPhone(editContact_EDT_phoneNumber.getText().toString());
+
+        if (!TextUtils.isEmpty(editContact_EDT_birthday.getText()))
+            contact.setBirthday(editContact_EDT_birthday.getText().toString());
+
+        if (!TextUtils.isEmpty(editContact_EDT_address.getText()))
+            contact.setAddress(editContact_EDT_address.getText().toString());
+
+        if (!TextUtils.isEmpty(editContact_EDT_gender.getText()))
+            contact.setGender(editContact_EDT_gender.getText().toString());
+
+        if (!TextUtils.isEmpty(editContact_EDT_email.getText()))
+            contact.setEmail(editContact_EDT_email.getText().toString());
     }
 }

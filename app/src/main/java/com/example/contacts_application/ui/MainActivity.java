@@ -4,6 +4,7 @@ package com.example.contacts_application.ui;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.contacts_application.ContactsAdapter;
@@ -21,6 +24,8 @@ import com.example.contacts_application.view_model.ContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -29,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private ContactViewModel contactViewModel;
     private FloatingActionButton add_fab;
     private RecyclerView recyclerView;
+    private ContactsAdapter adapter;
+    private TextView main_LBL_title;
     private ActivityResultLauncher<Intent> addContactActivityResultLauncher;
     private ActivityResultLauncher<Intent> editContactActivityResultLauncher;
 
@@ -39,22 +46,30 @@ public class MainActivity extends AppCompatActivity {
 
         findViews();
         setActivityResultLaunchers();
-        contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
-        contactViewModel.setUserForContacts(getUser());
-        contactViewModel.deleteAll(); //TODO delete this after tests
+        setRecyclerView();
+        setViewModel();
+        setOnClickListeners();
 
-        ContactsAdapter adapter = new ContactsAdapter();
+    }
+
+    private void setOnClickListeners() {
+        add_fab.setOnClickListener(view -> openAddContactActivityForResult());
+    }
+
+    /**
+     * initializes the adapter and the recycler view.
+     */
+    private void setRecyclerView() {
+        adapter = new ContactsAdapter();
         adapter.setContactListener(new ContactsAdapter.ContactListener() {
             @Override
             public void clicked(Contact contact) {
                 openContactDetailsActivity(contact);
-
             }
 
             @Override
             public void delete(Contact contact) {
                 contactViewModel.delete(contact);
-
             }
 
             @Override
@@ -64,20 +79,39 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-        contactViewModel.getAllContacts().observe(this, adapter::setContactList);
-
-
-        add_fab.setOnClickListener(view -> openAddContactActivityForResult());
     }
 
-    private User getUser() {
+
+    /**
+     * initialize the view model, setting the contacts for the specific user.
+     */
+    private void setViewModel() {
+        contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
+        contactViewModel.setUserForContacts(getUserFromLogin());
+        contactViewModel.getAllContacts().observe(this, new Observer<List<Contact>>() {
+            @Override
+            public void onChanged(List<Contact> contacts) {
+                if (contacts.size()==0){
+                    main_LBL_title.setVisibility(View.VISIBLE);
+                }else{
+                    main_LBL_title.setVisibility(View.INVISIBLE);
+                }
+                adapter.setContactList(contacts);
+            }
+        });
+    }
+
+    /**
+     * Get the user passed from the Login activity.
+     *
+     * @return User from Login.
+     */
+    private User getUserFromLogin() {
         Bundle bundle = getIntent().getExtras();
         String json = bundle.getString(Activity_Login.EXTRA_USER_KEY);
-        if(json!=null){
-           return new Gson().fromJson(json, User.class);
-        }else{
+        if (json != null) {
+            return new Gson().fromJson(json, User.class);
+        } else {
             throw new RuntimeException();
         }
     }
@@ -94,40 +128,26 @@ public class MainActivity extends AppCompatActivity {
         editContactActivityResultLauncher.launch(intent);
     }
 
+    /**
+     * set the activity result launchers to get results from edit and add contact activities
+     */
     private void setActivityResultLaunchers() {
         addContactActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null) {
-                            Contact contact = new Gson().fromJson(data.getStringExtra(EXTRA_CONTACT_KEY), Contact.class);
-                            addNewContact(contact);
-                        }
+                        addNewContact(getContactFromActivityResult(result.getData()));
                     } else {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "Contact did not saved!",
-                                Toast.LENGTH_LONG).show();
+                        showToastMessage("New Contact did not saved!");
                     }
                 });
         editContactActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null) {
-                            String json = data.getStringExtra(MainActivity.EXTRA_CONTACT_KEY);
-                            Contact contact = new Gson().fromJson(json, Contact.class);
-                            updateContact(contact);
-                        }
+                        updateContact(getContactFromActivityResult(result.getData()));
                     } else {
-                        Toast.makeText(
-                                MainActivity.this.getApplicationContext(),
-                                "Contact did not saved!",
-                                Toast.LENGTH_LONG).show();
+                        showToastMessage("Edited Contact did not saved!");
                     }
                 });
     }
@@ -136,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
     private void findViews() {
         recyclerView = findViewById(R.id.recyclerview);
         add_fab = findViewById(R.id.add_fab);
+        main_LBL_title = findViewById(R.id.main_LBL_title);
     }
 
 
@@ -144,17 +165,45 @@ public class MainActivity extends AppCompatActivity {
         addContactActivityResultLauncher.launch(intent);
     }
 
-    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
 
-
+    /**
+     * Add new contact to database and set his gender.
+     *
+     * @param contact the new Contact to add.
+     */
     private void addNewContact(Contact contact) {
         contactViewModel.setGenderForContact(contact);
         contactViewModel.insert(contact);
-
     }
 
+    /**
+     * update contact in database.
+     *
+     * @param contact the Contact to update.
+     */
     private void updateContact(Contact contact) {
         contactViewModel.update(contact);
+    }
+
+    private void showToastMessage(String message) {
+        Toast.makeText(
+                getApplicationContext(),
+                message,
+                Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Get the contact from the activity result.
+     *
+     * @param data holds the data of the contact
+     * @return the Contact from the activity result or null if empty
+     */
+    private Contact getContactFromActivityResult(Intent data) {
+        if (data != null) {
+            String json = data.getStringExtra(MainActivity.EXTRA_CONTACT_KEY);
+            return new Gson().fromJson(json, Contact.class);
+        }
+        return null;
     }
 
 

@@ -65,6 +65,10 @@ public class Activity_Add_Contact extends AppCompatActivity {
             contact.setEmail(contact_EDT_email.getText().toString());
     }
 
+    /**
+     * check if the mandatory fields are filled.
+     * @return true if the mandatory fields are filled, otherwise return false
+     */
     private boolean validateMandatoryFields() {
         if (TextUtils.isEmpty(contact_EDT_name.getText())) {
             contact_EDT_name.setError("This field is mandatory");

@@ -15,7 +15,6 @@ import java.util.List;
 @Dao
 public interface ContactDao {
 
-    //TODO leave with ignore???
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Contact contact);
 

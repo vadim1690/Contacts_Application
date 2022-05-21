@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.contacts_application.R;
@@ -20,6 +21,7 @@ public class Activity_Contact_Details extends AppCompatActivity {
     private TextView details_LBL_address;
     private TextView details_LBL_email;
     private TextView details_LBL_birthday;
+    private ImageView details_IMG_gender;
     private Contact contact;
 
     @Override
@@ -41,9 +43,22 @@ public class Activity_Contact_Details extends AppCompatActivity {
         details_LBL_name.setText(contact.getName());
         details_LBL_phone.setText(contact.getPhone());
         details_LBL_gender.setText(contact.getGender());
+        setContactGenderIcon();
         details_LBL_address.setText(contact.getAddress());
         details_LBL_email.setText(contact.getEmail());
         details_LBL_birthday.setText(contact.getBirthday());
+    }
+
+    private void setContactGenderIcon() {
+        String icName = "ic_gender_";
+        if (contact.getGender() == null || (!contact.getGender().equalsIgnoreCase("male") && !contact.getGender().equalsIgnoreCase("female"))) {
+            icName = icName + "none";
+        } else {
+            icName = icName + contact.getGender();
+        }
+
+        int drawableResourceId = this.getResources().getIdentifier(icName, "drawable", this.getPackageName());
+        details_IMG_gender.setImageResource(drawableResourceId);
     }
 
     private void setOnClickListeners() {
@@ -58,5 +73,6 @@ public class Activity_Contact_Details extends AppCompatActivity {
         details_LBL_address = findViewById(R.id.details_LBL_address);
         details_LBL_email = findViewById(R.id.details_LBL_email);
         details_LBL_birthday = findViewById(R.id.details_LBL_birthday);
+        details_IMG_gender = findViewById(R.id.details_IMG_gender);
     }
 }

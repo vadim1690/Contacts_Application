@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="buttonStyle" >
+        <item name="android:backgroundTint">#463F3A</item>
+        <item name="android:textColor">#F4F3EE</item>
+    </style>
+
+    <style name="editTextStyle" >
+        <item name="android:textColor">#463F3A</item>
+        <item name="android:textColorHint">#463F3A</item>
+        <item name="android:backgroundTint">#463F3A</item>
+
+    </style>
+
+    <style name="generalTextViewStyle" >
+        <item name="android:textColor">#463F3A</item>
+    </style>
+
+    <style name="contactDetailsTextViewStyle" >
+        <item name="android:textColor">#463F3A</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+</resources>

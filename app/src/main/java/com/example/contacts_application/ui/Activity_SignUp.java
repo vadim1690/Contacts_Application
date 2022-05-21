@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
+
 import android.widget.EditText;
 
 import com.example.contacts_application.R;
-import com.example.contacts_application.entities.Contact;
 import com.example.contacts_application.entities.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
@@ -29,23 +28,20 @@ public class Activity_SignUp extends AppCompatActivity {
     }
 
     private void setOnClickListeners() {
-        signUp_BTN_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(signUp_EDT_email.getText())||TextUtils.isEmpty(signUp_EDT_password.getText())) {
-                    setResult(RESULT_CANCELED, replyIntent);
-                } else {
-                    replyIntent.putExtra(Activity_Login.EXTRA_USER_KEY,
-                            new Gson().toJson(
-                                    new User(
-                                            signUp_EDT_email.getText().toString(),
-                                            signUp_EDT_password.getText().toString())));
-                    setResult(RESULT_OK, replyIntent);
+        signUp_BTN_signup.setOnClickListener(view -> {
+            Intent replyIntent = new Intent();
+            if (TextUtils.isEmpty(signUp_EDT_email.getText()) || TextUtils.isEmpty(signUp_EDT_password.getText())) {
+                setResult(RESULT_CANCELED, replyIntent);
+            } else {
+                replyIntent.putExtra(Activity_Login.EXTRA_USER_KEY,
+                        new Gson().toJson(
+                                new User(
+                                        signUp_EDT_email.getText().toString(),
+                                        signUp_EDT_password.getText().toString())));
+                setResult(RESULT_OK, replyIntent);
 
-                }
-                finish();
             }
+            finish();
         });
     }
 

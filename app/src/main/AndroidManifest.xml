@@ -12,22 +12,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/Theme.Contacts_Application"
         tools:targetApi="31">
         <activity
             android:name=".ui.Activity_Contact_Details"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.Activity_Edit_Contact"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.Activity_Add_Contact"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.Activity_SignUp"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.Activity_Login"
+            android:screenOrientation="portrait"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,6 +44,7 @@
 
         <activity
             android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="false">
 
         </activity>

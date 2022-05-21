@@ -4,12 +4,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:layout_margin="5dp">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#013159"
+        app:cardBackgroundColor="#463F3A"
 
         app:cardElevation="3dp"
         app:cardCornerRadius="10dp"
@@ -32,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Vadim Lazarevich"
-                    android:textColor="#ABBDFF"
+                    android:textColor="#F4F3EE"
                     android:textSize="28sp" />
 
                 <TextView
@@ -41,8 +42,8 @@
                     android:layout_height="wrap_content"
 
                     android:layout_margin="10dp"
-                    android:text="0547662475"
-                    android:textColor="#ABBDFF"
+                    android:text="0547662345"
+                    android:textColor="#F4F3EE"
                     android:textSize="22sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -58,7 +59,7 @@
                     android:id="@+id/list_BTN_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#013159"
+                    android:backgroundTint="#463F3A"
                     android:src="@drawable/ic_edit">
 
                 </ImageButton>
@@ -68,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:backgroundTint="#013159"
+                    android:backgroundTint="#463F3A"
                     android:src="@drawable/ic_delete">
 
                 </ImageButton>
