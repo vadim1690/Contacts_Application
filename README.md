@@ -17,7 +17,7 @@
   ![image](https://user-images.githubusercontent.com/68230512/169644566-1f2895cb-8519-41c5-84e0-5e5692035124.png)
 
 ### Main page (after contact added) - there are 2 buttons on each contact card one for editing mode and the other for delete.
-### Clicking on the card itself will bring you to contact details page.
+#### Clicking on the card itself will bring you to contact details page.
    
   ![image](https://user-images.githubusercontent.com/68230512/169644597-39ae0bf7-fe50-481c-acec-ca2ff00bbea2.png)
 
